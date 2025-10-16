@@ -972,7 +972,7 @@
                 
                 // Configuration - Update with your n8n webhook URL
                 this.config = {
-                    n8nWebhookUrl: 'http://localhost:5678/webhook/chat',
+                    n8nWebhookUrl: 'https://your-n8n-instance.com/webhook/chat-support',
                     apiKey: '', // Add if your n8n webhook requires authentication
                     timeout: 30000 // Request timeout in milliseconds
                 };
@@ -1043,57 +1043,53 @@
                 }
             }
             
-           async sendToAPI(message) {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
-
-    try {
-        const response = await fetch(this.config.n8nWebhookUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': this.config.apiKey ? `Bearer ${this.config.apiKey}` : undefined
-            },
-            body: JSON.stringify({
-                message: message,
-                sessionId: this.sessionId,
-                timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent,
-                url: window.location.href,
-                context: {
-                    previousMessages: this.getRecentMessages(),
-                    userInfo: this.getUserInfo()
+            async sendToAPI(message) {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
+                
+                try {
+                    const response = await fetch(this.config.n8nWebhookUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': this.config.apiKey ? `Bearer ${this.config.apiKey}` : undefined
+                        },
+                        body: JSON.stringify({
+                            message: message,
+                            sessionId: this.sessionId,
+                            timestamp: new Date().toISOString(),
+                            userAgent: navigator.userAgent,
+                            url: window.location.href,
+                            context: {
+                                previousMessages: this.getRecentMessages(),
+                                userInfo: this.getUserInfo()
+                            }
+                        }),
+                        signal: controller.signal
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) {
+                        throw new Error(`n8n API error: ${response.status} - ${response.statusText}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    // Handle different response formats from n8n
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    
+                    return data.response || data.message || data.reply || 'I received your message and will help you shortly.';
+                } catch (error) {
+                    clearTimeout(timeoutId);
+                    if (error.name === 'AbortError') {
+                        throw new Error('Request timed out. Please try again.');
+                    }
+                    throw error;
                 }
-            }),
-            signal: controller.signal
-        });
-
-        clearTimeout(timeoutId);
-
-        // ✅ IMPROVEMENT: Check for HTTP errors before parsing JSON
-        if (!response.ok) {
-            // Log the actual error text if available, otherwise use the status text
-            const errorText = await response.text();
-            throw new Error(`n8n API error: ${response.status} - ${errorText || response.statusText}`);
-        }
-
-        const data = await response.json(); 
-
-        if (data.error) {
-            throw new Error(data.error);
-        }
-
-        return data.response || data.message || data.reply || 'I received your message and will help you shortly.';
-        
-    } catch (error) {
-        clearTimeout(timeoutId);
-        if (error.name === 'AbortError') {
-            throw new Error('Request timed out. Please try again.');
-        }
-        // Re-throw the error to be caught by the handleSubmit function
-        throw error;
-    }
-}
+            }
             
             getRecentMessages() {
                 const messages = Array.from(this.chatMessages.querySelectorAll('.message')).slice(-6);
@@ -1186,4 +1182,5 @@
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f693b4e4a42e59',t:'MTc2MDYwNzQ0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+>
 
