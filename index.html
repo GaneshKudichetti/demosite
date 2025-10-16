@@ -1534,3 +1534,364 @@
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f708e6139a17b2',t:'MTc2MDYxMjI0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Form - Google Sheets Integration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .success-animation {
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .form-fade-out {
+            animation: fadeOut 0.3s ease-out;
+        }
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto">
+            <!-- Sign Up Form -->
+            <div id="signupForm" class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+                <header class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-gray-800 mb-2">Join Us Today</h1>
+                    <p class="text-gray-600">Create your account in seconds</p>
+                </header>
+
+                <form id="registrationForm" class="space-y-6">
+                    <div>
+                        <label for="fullName" class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+                        <input 
+                            type="text" 
+                            id="fullName" 
+                            name="fullName"
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-800"
+                            placeholder="Enter your full name"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="mobileNumber" class="block text-sm font-semibold text-gray-700 mb-2">Mobile Number</label>
+                        <input 
+                            type="tel" 
+                            id="mobileNumber" 
+                            name="mobileNumber"
+                            required
+                            pattern="[0-9]{10,15}"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-800"
+                            placeholder="Enter your mobile number"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email"
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-800"
+                            placeholder="Enter your email address"
+                        >
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        id="submitBtn"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 focus:ring-4 focus:ring-blue-200"
+                    >
+                        <span id="submitText">Sign Up Now</span>
+                        <span id="loadingSpinner" class="hidden">
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Processing...
+                        </span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="hidden bg-white rounded-2xl shadow-xl p-8 border border-gray-100 success-animation">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
+                        <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Successfully Signed Up!</h2>
+                    <p class="text-gray-600 mb-6">Welcome aboard! Your details have been recorded successfully.</p>
+                    
+                    <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                        <h3 class="font-semibold text-gray-700 mb-2">Registration Details:</h3>
+                        <div class="text-sm text-gray-600 space-y-1">
+                            <p><span class="font-medium">Name:</span> <span id="confirmName"></span></p>
+                            <p><span class="font-medium">Mobile:</span> <span id="confirmMobile"></span></p>
+                            <p><span class="font-medium">Email:</span> <span id="confirmEmail"></span></p>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        onclick="resetForm()"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200"
+                    >
+                        Sign Up Another User
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="hidden bg-white rounded-2xl shadow-xl p-8 border border-red-200">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6">
+                        <svg class="h-8 w-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Submission Failed</h2>
+                    <p class="text-gray-600 mb-6" id="errorText">There was an error submitting your details. Please try again.</p>
+                    
+                    <button 
+                        onclick="resetForm()"
+                        class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200"
+                    >
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // GOOGLE SHEETS API CONFIGURATION
+        // Replace these with your actual values
+        const GOOGLE_SHEETS_CONFIG = {
+            // Your Google Sheets API key
+            API_KEY: 'YOUR_API_KEY_HERE',
+            
+            // Your Google Sheet ID (from the URL)
+            SHEET_ID: 'YOUR_SHEET_ID_HERE',
+            
+            // The range where you want to append data (e.g., 'Sheet1!A:C')
+            RANGE: 'Sheet1!A:C',
+            
+            // Your Google Apps Script Web App URL (alternative method)
+            WEB_APP_URL: 'YOUR_WEB_APP_URL_HERE'
+        };
+
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = formData.get('fullName');
+            const mobile = formData.get('mobileNumber');
+            const email = formData.get('email');
+            
+            // Validate form
+            if (!name || !mobile || !email) {
+                showInlineMessage('Please fill in all fields', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            submitBtn.disabled = true;
+            submitText.classList.add('hidden');
+            loadingSpinner.classList.remove('hidden');
+            
+            // Prepare data for Google Sheets
+            const userData = {
+                name: name,
+                mobile: mobile,
+                email: email,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Submit to Google Sheets
+            submitToGoogleSheets(userData);
+        });
+
+        async function submitToGoogleSheets(userData) {
+            try {
+                // METHOD 1: Using Google Sheets API directly
+                if (GOOGLE_SHEETS_CONFIG.API_KEY && GOOGLE_SHEETS_CONFIG.SHEET_ID) {
+                    await submitViaAPI(userData);
+                }
+                // METHOD 2: Using Google Apps Script Web App
+                else if (GOOGLE_SHEETS_CONFIG.WEB_APP_URL) {
+                    await submitViaWebApp(userData);
+                }
+                else {
+                    throw new Error('Please configure your Google Sheets API credentials');
+                }
+                
+                showSuccessMessage(userData);
+                
+            } catch (error) {
+                console.error('Error submitting to Google Sheets:', error);
+                showErrorMessage(error.message);
+            } finally {
+                // Reset button state
+                const submitBtn = document.getElementById('submitBtn');
+                const submitText = document.getElementById('submitText');
+                const loadingSpinner = document.getElementById('loadingSpinner');
+                
+                submitBtn.disabled = false;
+                submitText.classList.remove('hidden');
+                loadingSpinner.classList.add('hidden');
+            }
+        }
+
+        // METHOD 1: Submit via Google Sheets API
+        async function submitViaAPI(userData) {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEETS_CONFIG.SHEET_ID}/values/${GOOGLE_SHEETS_CONFIG.RANGE}:append?valueInputOption=USER_ENTERED&key=${GOOGLE_SHEETS_CONFIG.API_KEY}`;
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    values: [[
+                        userData.name,
+                        userData.mobile,
+                        userData.email,
+                        userData.timestamp
+                    ]]
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error?.message || 'Failed to submit to Google Sheets');
+            }
+
+            return await response.json();
+        }
+
+        // METHOD 2: Submit via Google Apps Script Web App
+        async function submitViaWebApp(userData) {
+            const response = await fetch(GOOGLE_SHEETS_CONFIG.WEB_APP_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to submit to Google Sheets via Web App');
+            }
+
+            return await response.json();
+        }
+        
+        function showSuccessMessage(userData) {
+            // Update confirmation details
+            document.getElementById('confirmName').textContent = userData.name;
+            document.getElementById('confirmMobile').textContent = userData.mobile;
+            document.getElementById('confirmEmail').textContent = userData.email;
+            
+            // Hide form and show success message
+            const form = document.getElementById('signupForm');
+            const success = document.getElementById('successMessage');
+            const error = document.getElementById('errorMessage');
+            
+            form.classList.add('form-fade-out');
+            error.classList.add('hidden');
+            
+            setTimeout(() => {
+                form.classList.add('hidden');
+                success.classList.remove('hidden');
+            }, 300);
+        }
+
+        function showErrorMessage(errorText) {
+            // Update error text
+            document.getElementById('errorText').textContent = errorText;
+            
+            // Hide form and show error message
+            const form = document.getElementById('signupForm');
+            const success = document.getElementById('successMessage');
+            const error = document.getElementById('errorMessage');
+            
+            form.classList.add('form-fade-out');
+            success.classList.add('hidden');
+            
+            setTimeout(() => {
+                form.classList.add('hidden');
+                error.classList.remove('hidden');
+            }, 300);
+        }
+        
+        function resetForm() {
+            // Reset form
+            document.getElementById('registrationForm').reset();
+            
+            // Show form and hide messages
+            const form = document.getElementById('signupForm');
+            const success = document.getElementById('successMessage');
+            const error = document.getElementById('errorMessage');
+            
+            success.classList.add('hidden');
+            error.classList.add('hidden');
+            form.classList.remove('hidden', 'form-fade-out');
+        }
+        
+        function showInlineMessage(message, type) {
+            // Create inline message element
+            const existingMessage = document.querySelector('.inline-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `inline-message p-3 rounded-lg mb-4 ${type === 'error' ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-green-100 text-green-700 border border-green-200'}`;
+            messageDiv.textContent = message;
+            
+            const form = document.getElementById('registrationForm');
+            form.insertBefore(messageDiv, form.firstChild);
+            
+            // Remove message after 5 seconds
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f7987456d12e59',t:'MTc2MDYxODEyMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+
