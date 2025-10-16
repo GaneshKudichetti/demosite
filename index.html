@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jane Doe - Product Designer & Digital Artist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: inherit;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background-color: #fafafa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+        }
+        
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero-content .subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #4a5568;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-content .intro {
+            font-size: 1.125rem;
+            color: #718096;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #0d9488;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);
+        }
+        
+        .cta-button:hover {
+            background-color: #0f766e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(13, 148, 136, 0.4);
+        }
+        
+        /* Section Styling */
+        .section {
+            padding: 6rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #1a202c;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #0d9488;
+            border-radius: 2px;
+        }
+        
+        /* About Section */
+        .about {
+            background-color: white;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        
+        .about-text p {
+            font-size: 1.125rem;
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        
+        .skills h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 2rem;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .skill-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: #f7fafc;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-item:hover {
+            background-color: #edf2f7;
+            transform: translateY(-2px);
+        }
+        
+        .skill-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 0.75rem;
+            fill: #0d9488;
+        }
+        
+        .skill-item span {
+            font-weight: 500;
+            color: #2d3748;
+        }
+        
+        /* Projects Section */
+        .projects {
+            background-color: #f7fafc;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 240px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+        
+        .project-content {
+            padding: 2rem;
+        }
+        
+        .project-title {
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 0.75rem;
+        }
+        
+        .project-description {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tag {
+            background-color: #e6fffa;
+            color: #0d9488;
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background-color: #1a202c;
+            color: white;
+            text-align: center;
+        }
+        
+        .contact .section-title {
+            color: white;
+        }
+        
+        .contact .section-title::after {
+            background-color: #0d9488;
+        }
+        
+        .contact-content p {
+            font-size: 1.25rem;
+            color: #a0aec0;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .contact-email {
+            font-size: 1.5rem;
+            color: #0d9488;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-email:hover {
+            color: #14b8a6;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: #2d3748;
+            border-radius: 50%;
+            text-decoration: none;
+            color: #a0aec0;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: #0d9488;
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content .subtitle {
+                font-size: 1.25rem;
+            }
+            
+            .section {
+                padding: 4rem 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .social-links {
+                gap: 1rem;
+            }
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Jane Doe</h1>
+                <p class="subtitle">Product Designer & Digital Artist</p>
+                <p class="intro">I'm passionate about creating intuitive digital experiences that solve real problems and delight users. With a keen eye for detail and a love for clean design, I transform complex ideas into beautiful, functional solutions.</p>
+                <a href="#projects" class="cta-button">View My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>With over 5 years of experience in digital design, I specialize in creating user-centered solutions that bridge the gap between business goals and user needs. My approach combines strategic thinking with creative execution to deliver designs that are both beautiful and functional.</p>
+                    <p>I believe great design is invisible – it should feel natural and effortless to the user while solving complex problems behind the scenes. When I'm not designing, you'll find me exploring new design trends, sketching ideas, or collaborating with amazing teams to bring innovative products to life.</p>
+                </div>
+                <div class="skills">
+                    <h3>My Skills</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <svg class="skill-icon" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z"/>
+                            </svg>
+                            <span>Figma</span>
+                        </div>
+                        <div class="skill-item">
+                            <svg class="skill-icon" viewBox="0 0 24 24">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <path d="M9 9H15V15H9Z"/>
+                            </svg>
+                            <span>Adobe Creative Suite</span>
+                        </div>
+                        <div class="skill-item">
+                            <svg class="skill-icon" viewBox="0 0 24 24">
+                                <path d="M14 2H6A2 2 0 0 0 4 4V20A2 2 0 0 0 6 22H18A2 2 0 0 0 20 20V8L14 2Z"/>
+                            </svg>
+                            <span>HTML/CSS</span>
+                        </div>
+                        <div class="skill-item">
+                            <svg class="skill-icon" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M8 14S9.5 16 12 16S16 14 16 14"/>
+                            </svg>
+                            <span>Prototyping</span>
+                        </div>
+                        <div class="skill-item">
+                            <svg class="skill-icon" viewBox="0 0 24 24">
+                                <path d="M17 21V19H7V21H5V19A2 2 0 0 1 7 17H17A2 2 0 0 1 19 19V21H17Z"/>
+                                <path d="M7 3H17V17H7Z"/>
+                            </svg>
+                            <span>User Research</span>
+                        </div>
+                        <div class="skill-item">
+                            <svg class="skill-icon" viewBox="0 0 24 24">
+                                <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                            </svg>
+                            <span>Branding</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects section">
+        <div class="container">
+            <h2 class="section-title">Selected Works</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">E-commerce Platform Mockup</div>
+                    <div class="project-content">
+                        <h3 class="project-title">E-commerce Redesign</h3>
+                        <p class="project-description">Complete redesign of a fashion e-commerce platform focusing on improved user journey and conversion optimization.</p>
+                        <div class="project-tags">
+                            <span class="tag">UI/UX</span>
+                            <span class="tag">E-commerce</span>
+                            <span class="tag">Mobile</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">Banking App Interface</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Banking App Redesign</h3>
+                        <p class="project-description">Modern mobile banking experience with enhanced security features and intuitive financial management tools.</p>
+                        <div class="project-tags">
+                            <span class="tag">Mobile App</span>
+                            <span class="tag">Fintech</span>
+                            <span class="tag">UI/UX</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">Brand Identity System</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Tech Startup Branding</h3>
+                        <p class="project-description">Complete brand identity system for an AI startup including logo, color palette, and brand guidelines.</p>
+                        <div class="project-tags">
+                            <span class="tag">Branding</span>
+                            <span class="tag">Logo Design</span>
+                            <span class="tag">Identity</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">Dashboard Analytics</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Analytics Dashboard</h3>
+                        <p class="project-description">Data visualization dashboard for marketing teams with real-time insights and customizable reporting features.</p>
+                        <div class="project-tags">
+                            <span class="tag">Web App</span>
+                            <span class="tag">Data Viz</span>
+                            <span class="tag">Dashboard</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">Wellness App Design</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Wellness Mobile App</h3>
+                        <p class="project-description">Mindfulness and wellness app design focused on creating calming user experiences and habit tracking.</p>
+                        <div class="project-tags">
+                            <span class="tag">Mobile App</span>
+                            <span class="tag">Wellness</span>
+                            <span class="tag">UI/UX</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">Portfolio Website</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Creative Portfolio Site</h3>
+                        <p class="project-description">Responsive portfolio website for a photographer with custom animations and optimized image galleries.</p>
+                        <div class="project-tags">
+                            <span class="tag">Web Design</span>
+                            <span class="tag">Portfolio</span>
+                            <span class="tag">Photography</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact section">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="contact-content">
+                <p>I'm currently available for freelance projects. Let's create something amazing together.</p>
+                <a href="mailto:jane.doe@email.com" class="contact-email">jane.doe@email.com</a>
+                <div class="social-links">
+                    <a href="#" class="social-link" target="_blank" rel="noopener noreferrer">
+                        <svg class="social-icon" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452H16.893V14.883C16.893 13.555 16.866 11.846 15.041 11.846C13.188 11.846 12.905 13.291 12.905 14.785V20.452H9.351V9H12.765V10.561H12.811C13.288 9.661 14.448 8.711 16.181 8.711C19.782 8.711 20.448 11.081 20.448 14.166V20.452H20.447ZM5.337 7.433C4.193 7.433 3.274 6.507 3.274 5.368C3.274 4.23 4.194 3.305 5.337 3.305C6.477 3.305 7.401 4.23 7.401 5.368C7.401 6.507 6.476 7.433 5.337 7.433ZM7.119 20.452H3.555V9H7.119V20.452ZM22.225 0H1.771C0.792 0 0 0.774 0 1.729V22.271C0 23.227 0.792 24 1.771 24H22.222C23.2 24 24 23.227 24 22.271V1.729C24 0.774 23.2 0 22.222 0H22.225Z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" target="_blank" rel="noopener noreferrer">
+                        <svg class="social-icon" viewBox="0 0 24 24">
+                            <path d="M22 5.892A8.178 8.178 0 0 1 20.348 6.5A4.048 4.048 0 0 0 21.448 4.48A8.317 8.317 0 0 1 18.875 5.5A4.036 4.036 0 0 0 12.018 8.827A11.447 11.447 0 0 1 3.57 4.75A4.05 4.05 0 0 0 4.819 10.7A8.084 8.084 0 0 1 2.91 10.107V10.18A4.044 4.044 0 0 0 6.148 14.135A8.051 8.051 0 0 1 4.042 14.2A4.038 4.038 0 0 0 7.804 17.1A8.105 8.105 0 0 1 1.27 19.2A11.4 11.4 0 0 0 7.548 21C15.69 21 20.208 14.5 20.208 8.5C20.208 8.224 20.208 7.947 20.188 7.675A8.14 8.14 0 0 0 22 5.892Z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" target="_blank" rel="noopener noreferrer">
+                        <svg class="social-icon" viewBox="0 0 24 24">
+                            <path d="M12.017 0C5.396 0 .029 5.367.029 11.987C.029 17.396 3.438 21.983 8.206 23.621C8.806 23.733 9.025 23.396 9.025 23.104C9.025 22.846 9.015 22.075 9.01 21.065C5.672 21.789 4.968 19.455 4.968 19.455C4.422 18.07 3.633 17.7 3.633 17.7C2.546 16.956 3.717 16.971 3.717 16.971C4.922 17.055 5.555 18.207 5.555 18.207C6.625 20.042 8.364 19.512 9.05 19.205C9.158 18.429 9.467 17.9 9.81 17.6C7.145 17.3 4.344 16.268 4.344 11.585C4.344 10.25 4.809 9.156 5.579 8.297C5.444 7.993 5.039 6.75 5.684 5.067C5.684 5.067 6.689 4.765 8.984 6.354C9.944 6.087 10.964 5.952 11.984 5.948C13.004 5.952 14.024 6.087 14.984 6.354C17.264 4.765 18.269 5.067 18.269 5.067C18.914 6.75 18.509 7.993 18.389 8.297C19.154 9.156 19.619 10.25 19.619 11.585C19.619 16.28 16.814 17.295 14.144 17.59C14.564 17.95 14.954 18.686 14.954 19.81C14.954 21.416 14.939 22.706 14.939 23.096C14.939 23.391 15.149 23.731 15.764 23.608C20.565 21.982 23.983 17.407 23.983 11.987C23.983 5.367 18.592.001 12.017.001Z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for the CTA button
+        document.querySelector('.cta-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+
+        // Add scroll-based animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe project cards for animation
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Observe skill items for animation
+        document.querySelectorAll('.skill-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
+            observer.observe(item);
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f6789393b92e59',t:'MTc2MDYwNjMyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
