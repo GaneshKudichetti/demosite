@@ -1043,53 +1043,57 @@
                 }
             }
             
-            async sendToAPI(message) {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
-                
-                try {
-                    const response = await fetch(this.config.n8nWebhookUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': this.config.apiKey ? `Bearer ${this.config.apiKey}` : undefined
-                        },
-                        body: JSON.stringify({
-                            message: message,
-                            sessionId: this.sessionId,
-                            timestamp: new Date().toISOString(),
-                            userAgent: navigator.userAgent,
-                            url: window.location.href,
-                            context: {
-                                previousMessages: this.getRecentMessages(),
-                                userInfo: this.getUserInfo()
-                            }
-                        }),
-                        signal: controller.signal
-                    });
-                    
-                    clearTimeout(timeoutId);
-                    
-                    if (!response.ok) {
-                        throw new Error(`n8n API error: ${response.status} - ${response.statusText}`);
-                    }
-                    
-                    const data = await response.json();
-                    
-                    // Handle different response formats from n8n
-                    if (data.error) {
-                        throw new Error(data.error);
-                    }
-                    
-                    return data.response || data.message || data.reply || 'I received your message and will help you shortly.';
-                } catch (error) {
-                    clearTimeout(timeoutId);
-                    if (error.name === 'AbortError') {
-                        throw new Error('Request timed out. Please try again.');
-                    }
-                    throw error;
+           async sendToAPI(message) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
+
+    try {
+        const response = await fetch(this.config.n8nWebhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': this.config.apiKey ? `Bearer ${this.config.apiKey}` : undefined
+            },
+            body: JSON.stringify({
+                message: message,
+                sessionId: this.sessionId,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                url: window.location.href,
+                context: {
+                    previousMessages: this.getRecentMessages(),
+                    userInfo: this.getUserInfo()
                 }
-            }
+            }),
+            signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        // ✅ IMPROVEMENT: Check for HTTP errors before parsing JSON
+        if (!response.ok) {
+            // Log the actual error text if available, otherwise use the status text
+            const errorText = await response.text();
+            throw new Error(`n8n API error: ${response.status} - ${errorText || response.statusText}`);
+        }
+
+        const data = await response.json(); 
+
+        if (data.error) {
+            throw new Error(data.error);
+        }
+
+        return data.response || data.message || data.reply || 'I received your message and will help you shortly.';
+        
+    } catch (error) {
+        clearTimeout(timeoutId);
+        if (error.name === 'AbortError') {
+            throw new Error('Request timed out. Please try again.');
+        }
+        // Re-throw the error to be caught by the handleSubmit function
+        throw error;
+    }
+}
             
             getRecentMessages() {
                 const messages = Array.from(this.chatMessages.querySelectorAll('.message')).slice(-6);
